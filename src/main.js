@@ -12,8 +12,19 @@ import store from './store'
 // 注册全局组件
 import TypeNav from '@/components/TypeNav.vue'
 import Carousel from '@/components/Carousel'
+import MyPagination from '@/components/MyPagination.vue'
 Vue.component(TypeNav.name,TypeNav)
 Vue.component(Carousel.name,Carousel)
+Vue.component(MyPagination.name,MyPagination)
+
+// 引入 ElementUI
+// import ElementUI from 'element-ui';
+// Vue.use(ElementUI);
+import { Pagination } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(Pagination);
+
+
 
 // 引入 animate.css
 import animated  from 'animate.css'

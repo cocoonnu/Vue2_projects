@@ -142,6 +142,12 @@
             if(this.$route.path == '/home') {
                 this.showNav();
             }
+
+            if(JSON.parse(localStorage.getItem('navList'))) {
+                this.$store.state.home.navList = JSON.parse(localStorage.getItem('navList'));
+            } else {                
+                this.$store.dispatch('home/updataNavList');
+            }
         },
     }
 </script>

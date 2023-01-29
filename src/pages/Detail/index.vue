@@ -92,7 +92,7 @@
                                 <a class="mins" @click="itxtValue <= 1 ? 1 : itxtValue--">-</a>
                             </div>
                             <div class="add">
-                                <a href="javascript:">加入购物车</a>
+                                <a @click="addShopCart">加入购物车</a>
                             </div>
                         </div>
                     
@@ -377,7 +377,7 @@ export default {
     methods: {
         changeActive(arr,index) {
             for(let i = 0;i<arr.length;i++) arr[i].isChecked = 0;
-            
+
             arr[index].isChecked = 1;
         },
 
@@ -386,6 +386,23 @@ export default {
             if(isNaN(value) || value < 1) value = 1;
 
             this.itxtValue = parseInt(value);
+        },
+
+        async addShopCart() {
+            try {
+                await this.$store.dispatch('detail/addShopCart',{
+                    skuId: this.$route.params.goodId,
+                    skuNum: this.itxtValue
+                });
+
+                // 成功则跳转购物车路由
+                sessionStorage.setItem('skuInfo',JSON.stringify(this.skuInfo));
+                this.$router.push({name: 'addCartSuccess', query: {skuNum: this.itxtValue}});
+
+            } catch (error) {
+                console.log(error);
+            }
+
         }
     },
 
@@ -606,6 +623,7 @@ export default {
 
               .add {
                 float: left;
+                cursor: pointer;
 
                 a {
                   background-color: #e1251b;

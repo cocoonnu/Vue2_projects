@@ -1,7 +1,7 @@
 // detail 仓库
 
 // 引入请求函数
-import { reqgetGoodData } from '@/api'
+import { reqgetGoodData, reqAddShopCart } from '@/api'
 
 
 export default {
@@ -18,6 +18,15 @@ export default {
             }
         },
 
+        async addShopCart(context,{skuId,skuNum}) {
+            let result = await reqAddShopCart(skuId,skuNum);
+
+            if(result.code == 200) {
+                return '更新购物车成功';
+            } else {
+                return Promise.reject(new Error('更新购物车失败'));
+            }
+        },
     },
 
     mutations: {

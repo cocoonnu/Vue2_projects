@@ -7,6 +7,8 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
+import ShopCart from '@/pages/ShopCart'
+import AddCartSuccess from '@/pages/AddCartSuccess'
 
 
 //创建router实例对象
@@ -14,10 +16,7 @@ const router = new VueRouter({
     mode: 'history',
 
     scrollBehavior() {
-        return {
-            y: 0,
-            behavior: 'smooth',
-        }
+        return { y: 0, behavior: 'smooth'}
     },
 
 	routes:[
@@ -49,6 +48,16 @@ const router = new VueRouter({
         {
             path: '/detail/:goodId',
             component: Detail,
+        },
+        {
+            path: '/addCartSuccess',
+            name: 'addCartSuccess',
+            component: AddCartSuccess
+        },
+        {
+            name: 'shopcart',
+            path: '/shopcart',
+            component: ShopCart
         },
 
         // 设置首页路由

@@ -1,6 +1,6 @@
 // 统一接口管理：封装所有请求函数
 
-// 请求函数返回promise对象
+// 请求函数返回 promise 对象
 
 import requests from './requests';
 import mockRequests from './mockRequests'
@@ -24,6 +24,48 @@ export const reqgetGoodData = function(goodId) {
         url: `/item/${goodId}`,
     })
 } 
+
+export const reqAddShopCart = function(skuId,skuNum) {
+    return requests({
+        method: 'POST',
+        url: `/cart/addToCart/${skuId}/${skuNum}`,
+    })
+} 
+
+export const reqgetCartList = function() {
+    return requests.get(`/cart/cartList`);
+}
+
+export const reqDeleteCart = function(skuId) {
+    return requests({
+        method: 'DELETE',
+        url: `/cart/deleteCart/${skuId}`,
+    })
+} 
+
+export const reqCheckCart = function(skuId,isChecked) {
+    return requests({
+        method: 'GET',
+        url: `/cart/checkCart/${skuId}/${isChecked}`,
+    })
+} 
+
+export const reqGetCode = function(phone) {
+    return requests({
+        method: 'GET',
+        url: `/user/passport/sendCode/${phone}`,
+    })
+} 
+
+export const reqRegister = function(user) {
+    return requests({
+        method: 'POST',
+        data: user,
+        url: `/user/passport/register`,
+    })
+} 
+
+
 
 
 // mock 接口

@@ -6,6 +6,9 @@ import axios from 'axios';
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css';
 
+// 导入公共函数
+import { getUUID } from '@/utils/uuid_token'
+
 const requests = axios.create({
 
     //基础路径 请求url默认开头会加上baseURL
@@ -18,6 +21,10 @@ const requests = axios.create({
 
 //请求拦截器----在项目中发请求前执行的函数
 requests.interceptors.request.use(function(config) {
+    // config 为一个 AJAX 对象
+
+    // 给请求头添加游客 uuid
+    config.headers.userTempId = getUUID();
 
     // 加载进度条
     nprogress.start();
@@ -40,7 +47,7 @@ requests.interceptors.response.use(
     function(err) {
         nprogress.done();
 
-        console.log(err);
+        // console.log(err);
 
         return err;
     }
