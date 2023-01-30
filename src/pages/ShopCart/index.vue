@@ -101,7 +101,7 @@ export default {
     methods: {
         // 全选框功能实现
         allCheckedCart(isChecked) {
-            isChecked = isChecked ? 1 : 0;
+            isChecked = isChecked ? 1 : 0; 
 
             this.cartList.forEach((item) => {
                 this.checkCart(item.skuId,isChecked);
@@ -113,12 +113,15 @@ export default {
         async delCheckedCart() {
             try {
                 // 申请删除所有选中的商品
-                await this.$store.dispatch('shopcart/delCheckedCart');
+                let result = await this.$store.dispatch('shopcart/delCheckedCart');
 
-                // 成功则刷新购物车列表
+                // result 为成功态数组数据
+
+                // 为成功态则刷新购物车列表
                 this.$store.dispatch('shopcart/getCartList');
 
             } catch (error) {
+                // 为失败态则输出
                 alert('删除所有选中的商品失败');
             }
         },

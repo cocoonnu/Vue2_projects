@@ -26,6 +26,10 @@ requests.interceptors.request.use(function(config) {
     // 给请求头添加游客 uuid
     config.headers.userTempId = getUUID();
 
+    // 给请求头添加 token
+    let token = localStorage.getItem('token');
+    if(token) config.headers.token = token;
+
     // 加载进度条
     nprogress.start();
 
@@ -39,7 +43,7 @@ requests.interceptors.response.use(
         // 进度条结束
         nprogress.done();
 
-        // 直接返回响应体的 data 作为 promise对象 的value
+        // 直接返回响应体的 data 作为 promise 对象 的value
         return res.data
     },
 
@@ -47,7 +51,8 @@ requests.interceptors.response.use(
     function(err) {
         nprogress.done();
 
-        // console.log(err);
+        // 打印发送请求失败结果
+        console.log('发送请求失败，请检查 api 接口');
 
         return err;
     }

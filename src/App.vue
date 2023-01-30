@@ -29,13 +29,16 @@
         },
 
         mounted() {
-            // console.log(this.$route);
-            // 更新 vuex/home 里的 navList （如果本地存储有这不用发请求）
-            if(JSON.parse(localStorage.getItem('navList'))) {
-                this.$store.state.home.navList = JSON.parse(localStorage.getItem('navList'));
+            // 获取 navList
+            let navList = JSON.parse(localStorage.getItem('navList'));
+            if(navList) {
+                this.$store.state.home.navList = navList;
             } else {                
                 this.$store.dispatch('home/updataNavList');
             }
+
+            // 获取用户信息
+            this.$store.dispatch('user/getUserInfo');
 
         }
     }

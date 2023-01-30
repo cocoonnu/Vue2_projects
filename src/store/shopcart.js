@@ -41,9 +41,9 @@ export default {
         async delCheckedCart({state,dispatch}) {
             let promiseAll = [];
 
-            state.cartList.forEach(async function(item) {
+            state.cartList.forEach(function(item) {
                 if(item.isChecked) {
-                    let result = await dispatch('deleteCart',item.skuId);
+                    let result = dispatch('deleteCart',item.skuId);
                     promiseAll.push(result);
                 }
             })

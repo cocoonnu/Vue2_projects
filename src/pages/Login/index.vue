@@ -14,17 +14,18 @@
 					</ul>
 
 					<div class="content">
-						<form action="##">
+						<form>
 							<div class="input-text clearFix">
 								<span></span>
 								<input
 									type="text"
 									placeholder="邮箱/用户名/手机号"
+                                    v-model="phone"
 								/>
 							</div>
 							<div class="input-text clearFix">
 								<span class="pwd"></span>
-								<input type="text" placeholder="请输入密码" />
+								<input type="password" placeholder="请输入密码" v-model="password"/>
 							</div>
 							<div class="setting clearFix">
 								<label class="checkbox inline">
@@ -38,7 +39,7 @@
 								</label>
 								<span class="forget">忘记密码？</span>
 							</div>
-							<button class="btn">登&nbsp;&nbsp;录</button>
+							<button class="btn" @click.prevent="login">登&nbsp;&nbsp;录</button>
 						</form>
 
 						<div class="call clearFix">
@@ -79,6 +80,36 @@
 <script>
 export default {
 	name: "Login",
+
+    data() {
+        return {
+            phone: '',
+            password: '',
+        }
+    },
+
+    methods: {
+        async login() {
+            if(this.phone && this.password ) {
+                let result = await this.$store.dispatch('user/login',{
+                    phone: this.phone,
+                    password: this.password,
+                });
+
+                // 打印成功或者失败的 result.message
+                alert(result?.message);
+
+                // 登录成功跳转
+                if(result?.message == '登录成功') {
+                    this.$router.push("/home");
+                    this.$store.dispatch('user/getUserInfo');
+                }
+
+            } else {
+                alert('请填写正确信息');
+            }
+        }
+    }
 };
 </script>
 

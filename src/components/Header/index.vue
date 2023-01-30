@@ -5,10 +5,14 @@
             <div class="container">
                 <div class="loginList">
                     <p>尚品汇欢迎您！</p>
-                    <p>
+                    <p v-if="!userInfo">
                         <span>请</span>
                         <router-link to="/login">登录</router-link>
                         <router-link class="register" to="/register">免费注册</router-link>
+                    </p>
+                    <p v-else>
+                        <span>{{userInfo.name}}</span>
+                        <a class="logout" @click="logout">退出登录</a>
                     </p>
                 </div>
                 <div class="typeList">
@@ -56,121 +60,146 @@
 </template>
 
 <script>
-    export default {
-        name: 'Header',
+import { mapState } from 'vuex'
 
-        data() {
-            return {
-                searchWord: '',
-            }
+export default {
+    name: 'Header',
+
+    data() {
+        return {
+            searchWord: '',
+        }
+    },
+
+    computed: {
+        ...mapState('user',['userInfo']),
+    },
+
+    methods: {
+        goSearch() {
+            this.$router.push({
+                name: 'search',
+                query: {
+                    value: this.searchWord,
+                    dataname: this.$route.query.dataname || ''
+                }
+            })
         },
 
-        methods: {
-            goSearch() {
-                this.$router.push({
-                    name: 'search',
-                    query: {
-                        value: this.searchWord,
-                        dataname: this.$route.query.dataname || ''
-                    }
-                })
+        async logout() {
+            try {
+                await this.$store.dispatch('user/logout');
+
+                // 成功态则跳转到登录页面
+                this.$store.dispatch('user/getUserInfo');
+                this.$router.push("/login");
+
+            } catch (error) {
+                // 失败态打印
+                alert('退出登录失败');
             }
         }
-    };
+    }
+};
 </script>
 
 <style lang="less" scoped>
-    .header {
-        & > .top {
-            background-color: #eaeaea;
-            height: 30px;
-            line-height: 30px;
+.logout {
+    cursor: pointer;
+    margin-left: 5px;
+}
 
-            .container {
-                width: 1200px;
-                margin: 0 auto;
-                overflow: hidden;
+.header {
+    & > .top {
+        background-color: #eaeaea;
+        height: 30px;
+        line-height: 30px;
 
-                .loginList {
-                    float: left;
-
-                    p {
-                        float: left;
-                        margin-right: 10px;
-
-                        .register {
-                            border-left: 1px solid #b3aeae;
-                            padding: 0 5px;
-                            margin-left: 5px;
-                        }
-                    }
-                }
-
-                .typeList {
-                    float: right;
-
-                    a {
-                        padding: 0 10px;
-
-                        & + a {
-                            border-left: 1px solid #b3aeae;
-                        }
-                    }
-                }
-            }
-        }
-
-        & > .bottom {
+        .container {
             width: 1200px;
             margin: 0 auto;
             overflow: hidden;
 
-            .logoArea {
+            .loginList {
                 float: left;
 
-                .logo {
-                    img {
-                        width: 175px;
-                        margin: 25px 45px;
+                p {
+                    float: left;
+                    margin-right: 10px;
+
+                    .register {
+                        border-left: 1px solid #b3aeae;
+                        padding: 0 5px;
+                        margin-left: 5px;
                     }
                 }
             }
 
-            .searchArea {
+            .typeList {
                 float: right;
-                margin-top: 35px;
 
-                .searchForm {
-                    overflow: hidden;
+                a {
+                    padding: 0 10px;
 
-                    input {
-                        box-sizing: border-box;
-                        width: 490px;
-                        height: 32px;
-                        padding: 0px 4px;
-                        border: 2px solid #ea4a36;
-                        float: left;
-
-                        &:focus {
-                            outline: none;
-                        }
-                    }
-
-                    button {
-                        height: 32px;
-                        width: 68px;
-                        background-color: #ea4a36;
-                        border: none;
-                        color: #fff;
-                        float: left;
-                        cursor: pointer;
-
-                        &:focus {
-                            outline: none;
-                        }
+                    & + a {
+                        border-left: 1px solid #b3aeae;
                     }
                 }
             }
         }
     }
+
+    & > .bottom {
+        width: 1200px;
+        margin: 0 auto;
+        overflow: hidden;
+
+        .logoArea {
+            float: left;
+
+            .logo {
+                img {
+                    width: 175px;
+                    margin: 25px 45px;
+                }
+            }
+        }
+
+        .searchArea {
+            float: right;
+            margin-top: 35px;
+
+            .searchForm {
+                overflow: hidden;
+
+                input {
+                    box-sizing: border-box;
+                    width: 490px;
+                    height: 32px;
+                    padding: 0px 4px;
+                    border: 2px solid #ea4a36;
+                    float: left;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+
+                button {
+                    height: 32px;
+                    width: 68px;
+                    background-color: #ea4a36;
+                    border: none;
+                    color: #fff;
+                    float: left;
+                    cursor: pointer;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+}
 </style>

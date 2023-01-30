@@ -65,6 +65,21 @@ export const reqRegister = function(user) {
     })
 } 
 
+export const reqLogin = function(user) {
+    return requests({
+        method: 'POST',
+        data: user,
+        url: `/user/passport/login`,
+    })
+} 
+
+export const reqgetUserInfo = function() {
+    return requests.get(`/user/passport/auth/getUserInfo`);
+}
+
+export const reqLogout = function() {
+    return requests.get(`/user/passport/logout`);
+}
 
 
 
