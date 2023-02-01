@@ -3,6 +3,9 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
     transpileDependencies: true,
 
+    // 取消打包产生 map 文件
+    productionSourceMap:false,
+
     //关闭eslint校验
     lintOnSave: false,
 
@@ -16,6 +19,14 @@ module.exports = defineConfig({
             },
             
         }
-    }
+    },
 
+    configureWebpack: {
+        performance: {
+            //入口起点的最大体积
+            maxEntrypointSize: 50000000,
+            //生成文件的最大体积
+            maxAssetSize: 30000000,
+        }
+    }
 })

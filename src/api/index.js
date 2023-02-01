@@ -81,6 +81,14 @@ export const reqLogout = function() {
     return requests.get(`/user/passport/logout`);
 }
 
+export const reqFindAddressList = function() {
+    return requests.get(`/user/userAddress/auth/findUserAddressList`);
+}
+
+export const reqGetTradeList = function() {
+    return requests.get(`/order/auth/trade`);
+}
+
 
 
 // mock 接口

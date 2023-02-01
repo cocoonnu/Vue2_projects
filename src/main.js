@@ -18,17 +18,9 @@ Vue.component(Carousel.name,Carousel)
 Vue.component(MyPagination.name,MyPagination)
 
 // 引入 ElementUI
-// import ElementUI from 'element-ui';
-// Vue.use(ElementUI);
-import { Pagination } from 'element-ui';
+import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(Pagination);
-
-
-
-// 引入 animate.css
-import animated  from 'animate.css'
-Vue.use(animated)
+Vue.use(ElementUI);
 
 // 引入 mockServe
 import '@/mock/mockServe'
@@ -36,17 +28,29 @@ import '@/mock/mockServe'
 // 引入 swiper.css
 import "swiper/css/swiper.css";
 
+// 引入 api 接口
+import * as api from '@/api'
+
+// 使用图片加载
+import VueLazyload from 'vue-lazyload'
+import loadimage from '@/assets/loading.gif'
+
+Vue.use(VueLazyload, {
+    loading: loadimage,
+})
+
 Vue.config.productionTip = false
 
 new Vue({
     render: h => h(App),
 
+    // 插件
     router,
-
     store,
 
     // 安装全局事件总线
     beforeCreate() {
-        Vue.prototype.$bus = this 
+        Vue.prototype.$bus = this;
+        Vue.prototype.$api = api;
     },
 }).$mount('#app')
