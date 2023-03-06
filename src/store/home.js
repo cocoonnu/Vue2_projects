@@ -16,6 +16,7 @@ export default {
             let result = await reqgetCategoryList();
 
             if(result.code == 200) {
+                console.log(result.data);
                 context.commit('updataNavList',result.data)
             }
         },

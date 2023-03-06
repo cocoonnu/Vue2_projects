@@ -32,7 +32,7 @@ requests.interceptors.request.use(function(config) {
 
     // 加载进度条
     nprogress.start();
-
+    console.log(config);
     return config;
 })
 

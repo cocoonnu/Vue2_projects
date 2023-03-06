@@ -12,7 +12,6 @@
 <script>
     import Header from '@/components/Header'
     import Footer from '@/components/Footer'
-    import Test from '@/components/Test.vue'
     
 
     export default {
@@ -21,7 +20,6 @@
         components: {
             Header,
             Footer,
-            Test,
         },
 
         methods: {
